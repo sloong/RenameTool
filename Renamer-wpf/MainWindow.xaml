@@ -1,0 +1,109 @@
+﻿<Window x:Class="Renamer_wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Renamer_wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" MinHeight="450" MinWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="文件列表" Margin="0,10,12,21" Grid.Column="1" Grid.RowSpan="2">
+            <Grid>
+                <DataGrid x:Name="Filelist" Margin="0,0,0,31">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="源文件名" Width="160"/>
+                        <DataGridTextColumn Header="预览" Width="160"/>
+                        <DataGridTextColumn Header="结果" Width="50"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Content="添加" Margin="64,0,0,0" HorizontalAlignment="Left" Width="60" Click="Button_Add_Click" Height="25" VerticalAlignment="Bottom"/>
+                <Button Content="移除" Margin="158,0,0,0" HorizontalAlignment="Left" Width="60" Height="25" VerticalAlignment="Bottom"  Click="Button_Remove_Click" />
+                <Button Content="清空"  Margin="260,0,0,0" HorizontalAlignment="Left" Width="60" Click="Button_Clear_Click" Height="25" VerticalAlignment="Bottom"/>
+            </Grid>
+
+
+        </GroupBox>
+        <GroupBox Header="全局设置" Margin="10,10,4,21" Grid.Row="1">
+            <Grid>
+                <CheckBox x:Name="Global_FolderMode" Content="文件夹模式，忽略扩展名" HorizontalAlignment="Left" Margin="19,20,0,0" Width="168" Height="16" VerticalAlignment="Top" Click="CheckBoxClick"/>
+                <CheckBox x:Name="Global_ToggleCase" Content="大小写转换" HorizontalAlignment="Left" Margin="19,75,0,0" Width="85" Height="16" VerticalAlignment="Top" Click="CheckBoxClick"/>
+                <CheckBox x:Name="Global_AutoFixConflict" Content="自动解决命名冲突" HorizontalAlignment="Left" Margin="19,105,0,0" Width="123" Height="16" VerticalAlignment="Top" Click="CheckBoxClick"/>
+                <ComboBox x:Name="Global_AutoFixConflict_Value" Margin="162,102,0,0" SelectedIndex="0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="202" SelectionChanged="SelectionChanged">
+                    <ComboBoxItem Content="弹窗询问(默认)"/>
+                    <ComboBoxItem Content="合并（仅限文件夹）"/>
+                    <ComboBoxItem Content="在后面追加序号"/>
+                    <ComboBoxItem Content="直接覆盖"/>
+                    <ComboBoxItem Content="跳过"/>
+                </ComboBox>
+                <ComboBox x:Name="Global_ToggleCase_Value" Margin="162,68,0,0" SelectedIndex="0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="202" SelectionChanged="SelectionChanged">
+                    <ComboBoxItem Content="保持现状(默认)"/>
+                    <ComboBoxItem Content="全部转换为大写"/>
+                    <ComboBoxItem Content="全部转换为小写"/>
+                </ComboBox>
+            </Grid>
+
+        </GroupBox>
+        <TabControl Margin="10,10,4,3" x:Name="RenameOptionTab">
+            <TabItem Header="重排" Tag="Reindex">
+                <Grid Background="#FFE5E5E5">
+                    <Label Margin="8,0,0,0" Content="命名规则" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="73"/>
+                    <TextBox x:Name="Reindex_Rule" Text="TextBox" TextWrapping="Wrap" Margin="8,24,10,0" Height="23" VerticalAlignment="Top" TextChanged="TextChanged"/>
+                    <Label Margin="10,52,0,0" Content="* &gt; 原始文件名        # 可变字符" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="326"/>
+                    <TextBox x:Name="Reindex_Start" Text="1" TextWrapping="Wrap" Margin="34,88,0,0" Height="23" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="28" TextChanged="TextChanged"/>
+                    <Label Margin="8,88,0,0" Content="从" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="22"/>
+                    <Label Margin="69,88,0,0" Content="开始，每次递增" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="96"/>
+                    <TextBox x:Name="Reindex_Increment" Text="1" TextWrapping="Wrap" Margin="170,88,0,0" Height="23" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="30" TextChanged="TextChanged"/>
+                    <Label Margin="208,88,0,0" Content="，位数" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48"/>
+                    <TextBox x:Name="Reindex_Digits" Text="1" TextWrapping="Wrap" Margin="260,88,0,0" Height="23" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="28" TextChanged="TextChanged"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="替换" Tag="Replace">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Replace_From" Text="" TextWrapping="Wrap" Margin="61,21,10,0" Height="23" VerticalAlignment="Top" TextChanged="TextChanged"/>
+                    <Label Margin="10,21,0,0" Content="把" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46"/>
+                    <TextBox x:Name="Replace_To" Text="" TextWrapping="Wrap" Margin="61,54,10,0" Height="23" VerticalAlignment="Top" TextChanged="TextChanged"/>
+                    <Label Margin="10,54,0,0" Content="替换为" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46"/>
+                    <CheckBox x:Name="Replace_EnabelRegular" Content="启用正则表达式" HorizontalAlignment="Left" Margin="10,97,0,0" Width="125" Height="16" VerticalAlignment="Top" Click="CheckBoxClick"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="添加" Tag="Add">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Add_First" Text="" TextWrapping="Wrap" Margin="89,21,10,0" Height="23" VerticalAlignment="Top" TextChanged="TextChanged"/>
+                    <Label Margin="10,21,0,0" Content="在最前添加" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="74"/>
+                    <TextBox x:Name="Add_Last" Text="" TextWrapping="Wrap" Margin="89,54,10,0" Height="23" VerticalAlignment="Top" TextChanged="TextChanged"/>
+                    <Label Margin="10,54,0,0" Content="在最后添加" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="74"/>
+                    <TextBox x:Name="Add_Extend_Index" Text="1" TextWrapping="Wrap" Margin="61,122,0,0" Height="22" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="29" TextChanged="TextChanged"/>
+                    <Label Margin="18,121,0,0" Content="从第" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38"/>
+                    <Label Margin="95,121,0,0" Content="位开始，添加字符串" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="124"/>
+                    <TextBox x:Name="Add_Extend_AddString" Text="" TextWrapping="Wrap" Margin="224,123,0,0" Height="22" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="146" TextChanged="TextChanged"/>
+                    <CheckBox x:Name="Add_EnableExtend" Content="扩展添加" HorizontalAlignment="Left" Height="21" Margin="10,94,0,0" VerticalAlignment="Top" Width="89" Click="CheckBoxClick"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="删除" Tag="Delete">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Delete_DelString" Text="" TextWrapping="Wrap" Margin="80,21,10,0" Height="23" VerticalAlignment="Top" TextChanged="TextChanged"/>
+                    <Label Margin="10,21,0,0" Content="普通删除" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65"/>
+                    <TextBox x:Name="Delete_Extend_Index" Text="1" TextWrapping="Wrap" Margin="61,99,0,0" Height="22" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="29"  TextChanged="TextChanged"/>
+                    <Label Margin="18,98,0,0" Content="从第" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38"/>
+                    <Label Margin="95,98,0,0" Content="位开始，删除" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="83"/>
+                    <TextBox x:Name="Delete_Extend_DelCount" Text="1" TextWrapping="Wrap" Margin="188,100,0,0" Height="22" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="29"  TextChanged="TextChanged"/>
+                    <Label Margin="227,99,0,0" Content="个字符" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="83"/>
+                    <CheckBox x:Name="Delete_EnableExtend" Content="扩展删除" HorizontalAlignment="Left" Margin="10,71,0,0" Width="89" Height="21" VerticalAlignment="Top" Click="CheckBoxClick" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Content="开始" Margin="0,0,60,0" Grid.Row="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Right" Width="91" Click="Button_Start_Click"/>
+        <Button Content="退出" Margin="60,0,0,0" Grid.Column="1" Grid.Row="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" IsCancel="True"/>
+
+
+    </Grid>
+</Window>
