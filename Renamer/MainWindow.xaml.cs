@@ -51,8 +51,6 @@ namespace Renamer_wpf
 
         void AddFile( datagrid_item item)
         {
-            if (item.IsDirectory)
-                Global_FolderMode.IsChecked = true;
             _FileList.Add(item);
             Filelist.Items.Refresh();
         }
@@ -273,9 +271,8 @@ namespace Renamer_wpf
             }
         }
 
-        public bool? do_conflict(ref string new_file)
+        public bool? do_conflict(ref string new_file, string old_file)
         {
-            var old_file = current_file.FullName;
             if ( MainWindowObject.Global_AutoFixSameFile.IsChecked==true )
             {
                 var new_md5 = MD5_File_Enconding(new_file);
@@ -325,8 +322,23 @@ namespace Renamer_wpf
         public bool MergeTwoDirectory( string res_dir, string merge_dir )
         {
             var files = Directory.GetFiles(merge_dir);
+            var files2 = Directory.GetFiles(res_dir);
+            List<string> conflicts = new List<string>();
+            foreach(var i in files)
+            {
+                if( files2.Any((f)=>f==i))
+                {
+                    conflicts.Add(i);
+                }
+            }
 
+            if( conflicts.Count > 0 )
+            {
 
+            }
+            
+
+            return false;
         }
 
         public bool? do_directory_conflict(ref string new_directory)
