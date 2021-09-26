@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Renamer_wpf
+namespace Renamer
 {
     public enum RESULT_ENUM
     {

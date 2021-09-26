@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Renamer_wpf
+namespace Renamer
 {
 
     public delegate string rename_func(string old);
@@ -180,6 +180,11 @@ namespace Renamer_wpf
                 return true;
             });
         }
+
+        private void Button_Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 
 
@@ -205,7 +210,7 @@ namespace Renamer_wpf
                 if (MainWindowObject.rename_Func == null)
                     return "";
 
-                if (MainWindowObject.Global_IncludeExtension.IsChecked == true)
+                if ( IsDirectory || MainWindowObject.Global_IncludeExtension.IsChecked == true )
                 {
                     return MainWindowObject.rename_Func(current_file_name);
                 }
@@ -234,7 +239,10 @@ namespace Renamer_wpf
 
         public static string get_name_without_extension( string name )
         {
-            return name.Substring(0, name.LastIndexOf("."));
+            var index = name.LastIndexOf(".");
+            if (index == -1)
+                return name;
+            return name.Substring(0, index);
         }
 
         public string full_new_name => current_file.Directory + "\\" + preview_new_name;
@@ -287,7 +295,7 @@ namespace Renamer_wpf
             {
                 if (item.Tag.ToString() == "AddRFlag")
                 {
-                    new_file = get_name_without_extension(preview_new_name) + "_R" + extension;
+                    new_file = (IsDirectory ? preview_new_name : get_name_without_extension(preview_new_name)) + "_R" + extension;
                     return true;
                 }
                 else if (item.Tag.ToString() == "ShowMessage")
@@ -400,7 +408,7 @@ namespace Renamer_wpf
                 {
                     while (File.Exists(new_name))
                     {
-                        if (do_conflict(ref new_name) != true)
+                        if (do_conflict(ref new_name, current_file.FullName) != true)
                         {
                             result = "冲突解决失败";
                             return false;
