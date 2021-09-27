@@ -6,6 +6,11 @@
     <RootNamespace>Renamer</RootNamespace>
     <UseWPF>true</UseWPF>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <ApplicationIcon>SLOONG.ico</ApplicationIcon>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.0</Version>
+    <Description>Renam tool of SLOONG toolkit.</Description>
   </PropertyGroup>
 
 </Project>
