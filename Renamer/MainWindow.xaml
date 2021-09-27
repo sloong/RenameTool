@@ -23,7 +23,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="源文件名" Width="160" Binding="{Binding current_file_name}"/>
                         <DataGridTextColumn Header="预览" Width="160" Binding="{Binding preview_new_name}"/>
-                        <DataGridTextColumn Header="结果" Width="50" Binding="{Binding resultl}"/>
+                        <DataGridTextColumn Header="结果" Width="50" Binding="{Binding result}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button Content="添加" Margin="64,0,0,0" HorizontalAlignment="Left" Width="60" Click="Button_Add_Click" Height="25" VerticalAlignment="Bottom"/>
