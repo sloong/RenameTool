@@ -76,9 +76,12 @@ namespace Renamer
 
         private void Button_Remove_Click(object sender, RoutedEventArgs e)
         {
-            if (Filelist.SelectedIndex != -1)
+            if (Filelist.SelectedItems.Count > 0 )
             {
-                _FileList.RemoveAt(Filelist.SelectedIndex);
+                foreach( var item in Filelist.SelectedItems.Cast<datagrid_item>())
+                {
+                    _FileList.Remove(item);
+                }
                 Filelist.Items.Refresh();
             }
         }
@@ -155,7 +158,7 @@ namespace Renamer
         rename_func GetRenameFuncWithOption()
         {
             var func = GetRenameFunc();
-            if (Global_ToggleCase.SelectedItem is ComboBoxItem item)
+            if (Global_ToggleCase?.SelectedItem is ComboBoxItem item)
             {
                 if (item.Tag.ToString() == "ToCaptial")
                 {
@@ -215,6 +218,7 @@ namespace Renamer
         {
             Environment.Exit(0);
         }
+
     }
 
 
