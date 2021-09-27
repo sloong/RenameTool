@@ -79,7 +79,7 @@ namespace Renamer
 
         public void fill_with_result()
         {
-
+            current_file = new FileInfo(full_new_name);
         }
 
         public static string MD5_File_Enconding(string fileName)
@@ -214,7 +214,7 @@ namespace Renamer
             if (MainWindowObject.rename_Func == null)
                 return false;
 
-            string new_name = current_file.Directory + "\\" + preview_new_name;
+            string new_name = full_new_name;
 
             try
             {
