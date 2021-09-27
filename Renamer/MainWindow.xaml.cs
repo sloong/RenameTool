@@ -33,8 +33,8 @@ namespace Renamer
 
         private void Button_Start_Click(object sender, RoutedEventArgs e)
         {
-            int success = 0;
-            int fialed = 0;
+            int renamed = 0;
+            int skiped = 0;
             foreach(var item in  _FileList )
             {
                 var res = item.do_rename();
@@ -42,11 +42,11 @@ namespace Renamer
                     return;
 
                 if (res.Value==true)
-                    success++;
+                    renamed++;
                 else
-                    fialed++;
+                    skiped++;
             }
-            MessageBox.Show($"操作完成\r\n成功：{success}\r\n失败：{fialed}\r\n");
+            MessageBox.Show($"操作完成\r\n已处理：{renamed}\r\n未处理：{skiped}\r\n");
 
             if( Global_AutoFillResult.IsChecked == true )
             {
