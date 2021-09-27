@@ -47,6 +47,12 @@ namespace Renamer
                     fialed++;
             }
             MessageBox.Show($"操作完成\r\n成功：{success}\r\n失败：{fialed}\r\n");
+
+            if( Global_AutoFillResult.IsChecked == true )
+            {
+                // TODO
+
+            }
         }
 
         void AddFile( datagrid_item item)
@@ -98,8 +104,15 @@ namespace Renamer
                     {
                         if (Replace_EnabelRegular.IsChecked == true)
                         {
-                            Regex r = new Regex(Replace_From.Text);
-                            return (old) => r.Replace(old, Replace_To.Text, 1);
+                            try
+                            {
+                                Regex r = new Regex(Replace_From.Text);
+                                return (old) => r.Replace(old, Replace_To.Text, 1);
+                            }
+                            catch(Exception)
+                            {
+
+                            }
                         }
                         else
                         {
@@ -139,9 +152,26 @@ namespace Renamer
             return null;
         }
 
+        rename_func GetRenameFuncWithOption()
+        {
+            var func = GetRenameFunc();
+            if (Global_ToggleCase.SelectedItem is ComboBoxItem item)
+            {
+                if (item.Tag.ToString() == "ToCaptial")
+                {
+                    return (old) => func(old).ToUpper();
+                }
+                else if (item.Tag.ToString() == "ToLower")
+                {
+                    return (old) => func(old).ToLower();
+                }
+            }
+            return func;
+        }
+
         void Preview_Rename()
         {
-            rename_Func = GetRenameFunc();
+            rename_Func = GetRenameFuncWithOption();
             Filelist.Items.Refresh();
         }
 

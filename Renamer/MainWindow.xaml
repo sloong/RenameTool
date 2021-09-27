@@ -45,7 +45,7 @@
                 </ComboBox>
                 <ComboBox x:Name="Global_ToggleCase" Margin="162,67,0,0" SelectedIndex="0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="202" SelectionChanged="SelectionChanged">
                     <ComboBoxItem Content="保持现状(默认)" Tag="Keep"/>
-                    <ComboBoxItem Content="全部转换为大写" Tag="ToCaptial"/>
+                    <ComboBoxItem Content="全部转换为大写" Tag="ToUpper"/>
                     <ComboBoxItem Content="全部转换为小写" Tag="ToLower"/>
                 </ComboBox>
                 <Label Content="文件冲突处理方案" Margin="18,95,0,0" Width="auto" Height="auto" HorizontalAlignment="Left" VerticalAlignment="Top"/>
